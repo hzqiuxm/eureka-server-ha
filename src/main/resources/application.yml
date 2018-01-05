@@ -1,0 +1,31 @@
+# ha service name
+spring:
+  application:
+    name: service-hi-ha
+---
+spring:
+  profiles: ha1
+server:
+  port: 8761
+eureka:
+  instance:
+    # profiles = ha1
+    hostname: ha1
+  client:
+    serviceUrl:
+      # 将自己注册到ha2
+      defaultZone: http://ha2:8771/eureka/
+
+---
+spring:
+  profiles: ha2
+server:
+  port: 8771
+eureka:
+  instance:
+    # profiles = ha2
+    hostname: ha2
+  client:
+    serviceUrl:
+      # 将自己注册到ha1
+      defaultZone: http://ha1:8761/eureka/
